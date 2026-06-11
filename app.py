@@ -4,31 +4,32 @@ import pandas as pd
 from states import US_STATES
 from utils import generate_addresses
 
+# ---------------------------------------------------
+# Page Configuration
+# ---------------------------------------------------
+
 st.set_page_config(
     page_title="AI Property Address Generator",
     page_icon="🏠",
     layout="wide"
 )
-st.markdown("""
-<style>
-div.stButton > button:first-child {
-    background-color: #2563eb;
-    color: white;
-    border-radius: 8px;
-    border: none;
-    font-weight: 600;
-}
 
-div.stButton > button:first-child:hover {
-    background-color: #1d4ed8;
-}
-</style>
-""", unsafe_allow_html=True)
+# ---------------------------------------------------
+# Header
+# ---------------------------------------------------
+
 st.title("🏠 AI Property Address Generator")
 
 st.write(
-    "Generate property addresses across U.S. states"
+    "Generate realistic property addresses across all U.S. states for QA testing."
 )
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# ---------------------------------------------------
+# Input Section
+# ---------------------------------------------------
+
 with st.container(border=True):
 
     col1, col2, col3 = st.columns([2, 1, 3])
@@ -47,37 +48,53 @@ with st.container(border=True):
             value=10
         )
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
     generate = st.button(
-        "Generate Addresses"
+        "🏠 Generate Addresses",
+        type="primary"
     )
 
+# ---------------------------------------------------
+# Generate Addresses
+# ---------------------------------------------------
 
 if generate:
 
     with st.spinner("Generating addresses..."):
 
-        addresses = generate_addresses(
-            state,
-            count
-        )
+        try:
 
-        df = pd.DataFrame(addresses)
+            addresses = generate_addresses(
+                state,
+                count
+            )
 
-        st.success(
-            f"{len(df)} addresses generated successfully."
-        )
+            df = pd.DataFrame(addresses)
 
-        st.dataframe(
-            df,
-            use_container_width=True,
-            hide_index=True
-        )
+            st.success(
+                f"{len(df)} addresses generated successfully."
+            )
 
-        csv = df.to_csv(index=False)
+            st.dataframe(
+                df,
+                use_container_width=True,
+                hide_index=True
+            )
 
-        st.download_button(
-            label="📥 Export CSV",
-            data=csv,
-            file_name=f"{state}_Addresses.csv",
-            mime="text/csv"
-        )
+            csv = df.to_csv(
+                index=False
+            )
+
+            st.download_button(
+                label="📥 Export CSV",
+                data=csv,
+                file_name=f"{state}_Addresses.csv",
+                mime="text/csv"
+            )
+
+        except Exception as e:
+
+            st.error(
+                f"Error generating addresses: {str(e)}"
+            )
