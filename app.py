@@ -9,7 +9,21 @@ st.set_page_config(
     page_icon="🏠",
     layout="wide"
 )
+st.markdown("""
+<style>
+div.stButton > button:first-child {
+    background-color: #2563eb;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+}
 
+div.stButton > button:first-child:hover {
+    background-color: #1d4ed8;
+}
+</style>
+""", unsafe_allow_html=True)
 st.title("🏠 AI Property Address Generator")
 
 st.write(
