@@ -15,22 +15,28 @@ st.title("🏠 AI Property Address Generator")
 st.write(
     "Generate property addresses across U.S. states"
 )
+with st.container(border=True):
 
-col1, col2, col3 = st.columns([2, 1, 3])
+    col1, col2, col3 = st.columns([2, 1, 3])
 
-with col1:
-    state = st.selectbox(
-        "Select State",
-        US_STATES
+    with col1:
+        state = st.selectbox(
+            "Select State",
+            US_STATES
+        )
+
+    with col2:
+        count = st.number_input(
+            "Number of Addresses",
+            min_value=1,
+            max_value=100,
+            value=10
+        )
+
+    generate = st.button(
+        "Generate Addresses"
     )
 
-with col2:
-    count = st.number_input(
-        "Number of Addresses",
-        min_value=1,
-        max_value=100,
-        value=10
-    )
 
 if st.button("Generate Addresses"):
 
