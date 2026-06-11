@@ -1,11 +1,8 @@
 import json
-
 import streamlit as st
-from openai import OpenAI
+import openai
 
-client = OpenAI(
-    api_key=st.secrets["OPENAI_API_KEY"]
-)
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def generate_addresses(state, count):
 
@@ -41,20 +38,20 @@ Requirements:
   Multi Family
 """
 
-    response = client.chat.completions.create(
-        model="gpt-5.5",
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
         messages=[
             {
-                "role":"system",
-                "content":"Generate valid JSON only."
+                "role": "system",
+                "content": "Generate valid JSON only."
             },
             {
-                "role":"user",
-                "content":prompt
+                "role": "user",
+                "content": prompt
             }
         ]
     )
 
-    content = response.choices[0].message.content
+    content = response["choices"][0]["message"]["content"]
 
     return json.loads(content)
