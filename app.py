@@ -38,7 +38,7 @@ with st.container(border=True):
     )
 
 
-if st.button("Generate Addresses"):
+if generate:
 
     with st.spinner("Generating addresses..."):
 
