@@ -13,7 +13,7 @@ st.set_page_config(
 st.title("🏠 AI Property Address Generator")
 
 st.write(
-    "Generate synthetic property addresses for QA testing."
+    "Generate property addresses across U.S. states"
 )
 
 state = st.selectbox(
